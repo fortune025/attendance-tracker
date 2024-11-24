@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+CONFIGURATION:
+Before using or testing this application, it needs to be configured correctly, here are the steps for a successful configuration:
+Requirements
+1. Install Node.js (v18 or newer) 
+2. Install MySQL
+Installation Procedures
+ 1. Extract the Project
+- Unzip to location of choice
+- Open a terminal/command prompt and navigate to the project folder
+ 2. Database Setup
+First, create your MySQL database:
+- Open MySQL Workbench or MySQL command line
+- Create a new database with the name of your choice
+```sql
+CREATE DATABASE your_database_name;
 ```
+- Please take note of your MySQL username, your password and the database you have just created
+3. Environment Setup
+Create a new file named `.env` in the root directory of your project and input these credentials in it:
+```
+# Kinde Auth Config ( leave these the same)
+KINDE_CLIENT_ID=460a4e04113e4de5b027d4387ac3a30a
+KINDE_CLIENT_SECRET=l7LWZ7Tnm3mz0bUSwAhu0C787jmHcCqrkvxGqMnyV9Kuv4vKeyO
+KINDE_ISSUER_URL=https://attendancetracker215.kinde.com
+KINDE_SITE_URL=http://localhost:3000
+KINDE_POST_LOGOUT_REDIRECT_URL=http://localhost:3000
+KINDE_POST_LOGIN_REDIRECT_URL=http://localhost:3000/dashboard
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Database config ( update these with your mysql credentials)
+NEXT_PUBLIC_HOST=localhost
+NEXT_PUBLIC_USER=your_mysql_username
+NEXT_PUBLIC_DB_NAME=your_database_name
+NEXT_PUBLIC_DB_PASSWORD=your_mysql_password
+``` 
+Replace the following with your mysql credentials:
+- `your_mysql_username`: Your MySQL username (it’s usually 'root')
+- `your_database_name`: Database name you created in the step 2
+- `your_mysql_password`: Your MySQL password
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+ 4. Install Dependencies
+In the project directory, you can run “npm install” to install dependencies. 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+ 5. Initialize Database Schema
+To create the database tables, run: “npm run db:push”, it will push the schema to the database.
+ 6. Start the Development Server
+You can now start the application with running the following command: “npm run dev”. The application should be now available at [http://localhost:3000](http://localhost:3000)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Troubleshooting
+1. Database Connection Errors:
+   - Check whether MySQL is running on port 3306
+   - Confirm your database credentials in the .env file
+   - Test your MySQL connection: test this by trying to create a table in the database.
+   - Once connected, verify your database exists with the following query in MySQL workbench: SHOW DATABASES;
+2. Node.js Version Issues:
+   - Verify Node.js version by running `node -v`
+   - Use Node.js v18 or higher
+3. Port 3000 is in use:
+   - Switch port using `npm run dev -- -p 3001`
+   - Update KINDE_SITE_URL and other URLS to new port number
+4. Login Issues:
+   - Please don't edit the Kinde authentication variables
+   - This will allow to login correctly.
